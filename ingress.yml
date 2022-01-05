@@ -1,0 +1,22 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: adventure-app
+  namespace: default
+spec:
+ rules:
+ - host: adventure-app.default.192.168.218.174.sslip.io
+   http:
+     paths:
+     - backend:
+         service:
+           name: adventureworks-app
+           port:
+             number: 5000
+       path: /
+       pathType: Prefix
+status:
+  loadBalancer:
+    ingress:
+    - ip: 192.168.218.174
