@@ -1,0 +1,50 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: adventureworks-app
+  name: adventureworks-app
+spec:
+  ports:
+    - name: "5000"
+      port: 5000
+      targetPort: 80
+  selector:
+    app: adventureworks-app
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: adventureworks-app
+  name: adventureworks-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: adventureworks-app
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: adventureworks-app
+    spec:
+      containers:
+      - env:
+        - name: ConnectionStrings__AdventureWorks
+          value: |
+            Data Source=adventureworks;Initial Catalog=AdventureWorks2019;Integrated Security=False;User Id=sa;Password=ThisIsNotASecurePassword123;MultipleActiveResultSets=True
+        image: phillipsj/adventureworks-app:v0.1.0
+        name: adventureworks-app
+        ports:
+        - containerPort: 80
+      restartPolicy: Always
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.io/os
+                    operator: In
+                    values:
+                      - windows
