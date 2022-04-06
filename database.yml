@@ -29,7 +29,7 @@ spec:
         app: adventureworks
     spec:
       containers:
-        - image: leandroscar/adventureworksdb
+        - image: phillipsj/adventureworks:20210905
           name: adventureworks
           ports:
             - containerPort: 1433
