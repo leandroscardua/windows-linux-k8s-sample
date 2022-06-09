@@ -6,7 +6,7 @@ metadata:
   namespace: default
 spec:
  rules:
- - host: adventure-app.default.192.168.122.151.sslip.io
+ - host: adventure-app.default.192.168.122.111.sslip.io
    http:
      paths:
      - backend:
@@ -19,4 +19,4 @@ spec:
 status:
   loadBalancer:
     ingress:
-    - ip: 192.168.122.151
+    - ip: 192.168.122.111
